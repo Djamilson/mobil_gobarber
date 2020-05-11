@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GobarberVip</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">BuildConfig.CODEPUSH_KEY</string>
+</resources>
