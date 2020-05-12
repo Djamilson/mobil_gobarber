@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Animated, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 import { useIsFocused } from '@react-navigation/native';
+import { formatRelative, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import socket from 'socket.io-client';
 
+import host from '~/_config/host';
 import api from '~/_services/api';
 import Appointment from '~/components/Appointment';
 import Background from '~/components/Background/default';
 import Header from '~/components/Header';
 import Message from '~/components/Message';
 import Toast from '~/components/MessageToast';
+import enumAppointment from '~/enum/appointments';
 
 import {
   Container,
@@ -30,6 +35,7 @@ import {
 
 export default function Dashboard({ navigation }) {
   const profile = useSelector((state) => state.user.profile);
+  const { id } = profile;
   const [appointments, setAppointments] = useState([]);
   const [appointmentsOld, setAppointmentsOld] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,8 +43,24 @@ export default function Dashboard({ navigation }) {
   const [dataFormat, setDataFormat] = useState();
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
-  const isFocused = useIsFocused();
+  const UrlSocketWeb = `https://${host.WEBHOST}`;
+  const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
 
+  function dateFormatted(time) {
+    return formatRelative(parseISO(time), new Date(), {
+      locale: pt,
+    });
+  }
+
+  const io = useMemo(
+    () =>
+      socket(UrlSocketWeb, {
+        query: { id, value: 'dashboard' },
+      }),
+    [UrlSocketWeb, id],
+  );
+
+  const isFocused = useIsFocused();
   const animatedValue = new Animated.Value(0);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -161,6 +183,68 @@ export default function Dashboard({ navigation }) {
       init();
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    function subscribeToNewFiles() {
+      io.on('atender', (dta) => {
+        const listTes = appointments.map((appointment) => {
+          if (appointment.id === dta.id) {
+            const newap = {
+              ...appointment,
+              status: enumAppointment.atendendo,
+            };
+
+            return newap;
+          }
+          return appointment;
+        });
+
+        setAppointments(listTes);
+      });
+
+      io.on('finally', (dta) => {
+        if (
+          dta.id !== null &&
+          dta.id !== undefined &&
+          appointments !== undefined &&
+          appointments.length > 0
+        ) {
+          console.log('DataFormat:::', dataFormat);
+
+          const listTes = appointments.filter((appointment) => {
+            if (appointment.id !== dta.id) {
+              return { ...appointment };
+            }
+            // appSelected = appointment;
+            setAppointmentSelect(appointment.provider.name);
+            setDataFormat(dateFormatted(appointment.date));
+            console.log('==>>: ', appointment);
+            return '';
+          });
+
+          setAppointments(listTes);
+
+          if (dta.status === enumAppointment.cancelado) {
+            setMessageCanceled(!messageCanceled);
+            // setAppointmentSelect(appSelected.provider.name);
+            // setDataFormat(dateFormatted(appSelected.date));
+          }
+        }
+      });
+    }
+
+    if (isFocused) {
+      subscribeToNewFiles();
+    }
+  }, [
+    appointmentSelect,
+    appointments,
+    appointments.length,
+    dataFormat,
+    io,
+    isFocused,
+    messageCanceled,
+  ]);
 
   return (
     <Background>

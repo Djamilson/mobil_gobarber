@@ -30,33 +30,7 @@ IconMa.loadFont();
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
-/*
-function newDashboard() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTransparent: true,
-        headerTintColor: `${colors.white_}`,
-        headerLeftContainerStyle: {
-          marginLeft: 10,
-        },
-        headerTitleAlign: 'center',
-      }}>
-      <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
-        options={{ headerShown: false }}
-      />
 
-      <Stack.Screen
-        name="Logout"
-        component={Logout}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-}
-*/
 function NewStack() {
   return (
     <Stack.Navigator
@@ -76,6 +50,11 @@ function NewStack() {
         }}
       />
       <Stack.Screen
+        name="Logout"
+        component={Logout}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="SelectDateTime"
         component={SelectDateTime}
         options={{
@@ -90,12 +69,6 @@ function NewStack() {
           title: 'Confirmar agendamento',
           headerLeft: () => <TouchableOpacity onPress={() => {}} />,
         }}
-      />
-
-      <Stack.Screen
-        name="Logout"
-        component={Logout}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -130,37 +103,6 @@ function NewFila() {
     </Stack.Navigator>
   );
 }
-
-/*
-function NewDashboardAdmin() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTransparent: true,
-        headerTintColor: '#FFF',
-        headerLeftContainerStyle: {
-          marginLeft: 20,
-        },
-      }}>
-      <Stack.Screen
-        name="SelectProvider"
-        component={SelectProvider}
-        options={{
-          title: 'Selecione o prestador',
-          headerLeft: ({ navigation }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Dashboard');
-              }}>
-              <Icon name="chevron-left" size={20} color="#FFF" />
-            </TouchableOpacity>
-          ),
-        }}
-      />
-
-    </Stack.Navigator>
-  );
-} */
 
 function newProfile() {
   return (
@@ -282,6 +224,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
     return (
       <Stack.Navigator headerMode="none">
         <Stack.Screen name="RegulationReview" component={RegulationReview} />
+        <Stack.Screen name="Logout" component={Logout} />
       </Stack.Navigator>
     );
   }
