@@ -21,16 +21,10 @@ import enumAppointment from '~/enum/appointments';
 import {
   Container,
   Content,
-  SubLinhaButton,
-  ProfileInfo,
   Name,
   ProfileContainer,
-  OrderDeliveredLink,
-  OrderWithdrawLink,
-  SignLinkText,
   ContentList,
   List,
-  PendingLinkText,
 } from './styles';
 
 export default function Dashboard({ navigation }) {

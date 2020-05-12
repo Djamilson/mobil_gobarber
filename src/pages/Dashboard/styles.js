@@ -1,5 +1,3 @@
-import { StyleSheet } from 'react-native';
-
 import styled from 'styled-components/native';
 
 import { colors, fonts, metrics } from '~/styles';
@@ -44,13 +42,6 @@ export const ProfileContainer = styled.View`
   display: flex;
 `;
 
-export const ProfileInfo = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  display: flex;
-`;
-
 export const Avatar = styled.Image`
   width: 60px;
   height: 60px;
@@ -63,27 +54,4 @@ export const Name = styled.Text`
   font-size: ${fonts.big}px;
   color: ${colors.dark};
   margin-top: 5px;
-`;
-
-export const OrderDeliveredLink = styled.TouchableOpacity`
-  padding-right: 20px;
-`;
-
-export const OrderWithdrawLink = styled.TouchableOpacity``;
-
-export const PendingLinkText = styled.Text`
-  color: ${colors.third};
-  font-weight: bold;
-  font-size: ${fonts.small}px;
-`;
-
-export const SubLinhaButton = styled.View`
-  border-bottom-width: ${StyleSheet.hairlineWidth}px;
-  border-bottom-color: ${colors.third};
-`;
-
-export const SignLinkText = styled.Text`
-  color: ${colors.sixX};
-  font-weight: bold;
-  font-size: ${fonts.small}px;
 `;

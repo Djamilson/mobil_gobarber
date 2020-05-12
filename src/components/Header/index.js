@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
+import { CommonActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import Avatar from '~/components/Avatar';
 import TermosCondicoes from '~/components/TermosCondicoes';
 import { colors, fonts } from '~/styles';
@@ -31,7 +34,12 @@ export default function Header({ navigation }) {
   }
 
   function changeLogout() {
-    navigation.navigate('Logout');
+    // navigation.navigate('Logout');
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: 'Logout',
+      }),
+    );
   }
 
   return (
@@ -66,6 +74,6 @@ export default function Header({ navigation }) {
 
 Header.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
   }).isRequired,
 };
