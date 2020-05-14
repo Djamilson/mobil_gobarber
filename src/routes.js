@@ -31,6 +31,59 @@ IconMa.loadFont();
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
+
+function newDashboardAdmin() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTransparent: true,
+        headerTintColor: `${colors.white_}`,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerTitleAlign: 'center',
+      }}>
+      <Stack.Screen
+        name="DashboardAdmin"
+        component={DashboardAdmin}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Logout"
+        component={Logout}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function newDashboard() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTransparent: true,
+        headerTintColor: `${colors.white_}`,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerTitleAlign: 'center',
+      }}>
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Logout"
+        component={Logout}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function NewStack() {
   return (
     <Stack.Navigator
@@ -48,11 +101,6 @@ function NewStack() {
           title: 'Selecione o prestador',
           headerLeft: () => <TouchableOpacity onPress={() => {}} />,
         }}
-      />
-      <Stack.Screen
-        name="Logout"
-        component={Logout}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SelectDateTime"
@@ -148,7 +196,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
           }}>
           <Tabs.Screen
             name="DashboardAdmin"
-            component={DashboardAdmin}
+            component={newDashboardAdmin}
             options={{
               tabBarLabel: 'Meus agendamentos',
               tabBarIcon: ({ color }) => (
@@ -178,7 +226,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
           }}>
           <Tabs.Screen
             name="Dashboard"
-            component={Dashboard}
+            component={newDashboard}
             options={{
               tabBarLabel: 'Agendamentos',
               tabBarIcon: ({ color }) => (

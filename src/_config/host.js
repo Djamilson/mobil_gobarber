@@ -13,9 +13,9 @@ if (__DEV__) {
   url = Platform.OS === 'android' ? '10.0.2.2' : ip;
   require('react-devtools');
 }
-
+// WEBHOST: url
 export default {
   LOCALHOST: '192.168.0.125',
   PORT: 3000,
-  WEBHOST: url,
+  WEBHOST: '192.168.0.125',
 };

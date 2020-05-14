@@ -76,11 +76,11 @@ export default function Busca({ handleSelectProvider }) {
               paddingVertical: 8,
               borderColor: '#fff',
               borderRadius: 8,
-              paddingRight: 30, // to ensure the text is never behind the icon
+              paddingRight: 0, // to ensure the text is never behind the icon
             },
             iconContainer: {
-              top: 15,
-              right: 30,
+              top: 20, // to move icon up end dow
+              right: 40,
             },
           }}
           useNativeAndroidPickerStyle={false}

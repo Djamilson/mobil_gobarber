@@ -18,7 +18,10 @@ import { store, persistor } from './store';
 
 YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
+  'Warning: DatePickerAndroid',
   'Warning: componentWillReceiveProps is deprecated',
+  'Unrecognized WebSocket',
+  'Unrecognized WebSocket connection option(s)',
 ]);
 
 const codePushOptions = {
