@@ -1,57 +1,64 @@
 import styled from 'styled-components/native';
 
+import Button from '~/components/Button';
+import { colors } from '~/styles';
+import { widthPercentageToDP } from '~/utils/Layout';
+
 export const Container = styled.View`
   margin-bottom: 15px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 7px;
-  background: ${props => (props.agendar ? '#fff' : '#dbead5')};
+  background: ${(props) => (props.agendar ? '#fff' : '#dbead5')};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  opacity: ${props => (props.past && props.agendar ? 0.6 : 1)};
+  opacity: ${(props) => (props.past && props.agendar ? 0.6 : 1)};
 `;
 export const ContainerButton = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
   padding: 2px;
   border-radius: 7px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   max-width: 100px;
   margin-left: 2px;
 `;
 
-export const CancelButton = styled.TouchableOpacity`
-  padding: 0 10px;
-  height: 36px;
-  background: #ff0000;
+export const CancelButton = styled(Button)`
+  margin-top: 10px;
+  background: ${colors.red};
+  height: 40px;
+
   border-radius: 4px;
-
-  flex-direction: row;
-  align-items: center;
-`;
-
-export const AtendendoButton = styled.TouchableOpacity`
-  padding: 0 10px;
-  height: 36px;
-  background: #008000;
-  border-radius: 4px;
-
   flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
+
+  width: ${widthPercentageToDP('20%')}px;
 `;
 
-export const FinalityButton = styled.TouchableOpacity`
-  padding: 0 10px;
-  height: 36px;
-  background: #1a1d60;
-  border-radius: 4px;
+export const AtendendoButton = styled(Button)`
+  margin-top: 5px;
+  background: ${colors.green};
+  height: 40px;
 
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
+  padding: 0px 5px 5px 0px;
+  width: ${widthPercentageToDP('20%')}px;
+`;
+
+export const FinalityButton = styled(Button)`
+  margin-top: 10px;
+  background: ${colors.third};
+  height: 40px;
+
+  padding: 0px 5px 5px 5px;
+
+  width: ${widthPercentageToDP('20%')}px;
 `;
 
 export const Left = styled.View`
@@ -91,14 +98,14 @@ export const Name = styled.Text`
 `;
 
 export const TextButton = styled.Text`
-  font-weight: bold;
-  font-size: 14px;
-  color: #fff;
-  margin-right: 5px;
+  font-size: 12px;
+  margin-top: 4px;
+
+  padding-right: 5px;
 `;
 
 export const Time = styled.Text`
-  color: ${props => (props.agendar ? '#fff' : '#999')};
+  color: ${(props) => (props.agendar ? '#fff' : '#999')};
   font-size: 13px;
   margin-top: 4px;
 `;
@@ -115,13 +122,13 @@ export const InfoStatusChamada = styled.View`
 export const StatusLabel = styled.Text`
   font-weight: bold;
   font-size: 14px;
-  color: ${props => (props.agendar ? '#fff' : '#999')};
+  color: ${(props) => (props.agendar ? '#fff' : '#999')};
 `;
 
 export const StatusLabelFila = styled.Text`
   font-weight: bold;
   font-size: 18px;
-  color: ${props => (props.agendar ? '#fff' : '#999')};
+  color: ${(props) => (props.agendar ? '#fff' : '#999')};
 `;
 
 export const StatusText = styled.Text`

@@ -1,7 +1,9 @@
-import {TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styled from 'styled-components';
+
+import Button from '~/components/Button';
+import { colors } from '~/styles';
 
 export const Container = styled.View`
   flex: 1;
@@ -26,7 +28,7 @@ export const Item = styled.View`
   padding: 3px;
   max-height: 95%;
 `;
-export const ApproveButton = styled(TouchableOpacity)`
+export const ApproveButton = styled(Button)`
   position: absolute;
   bottom: 30px;
   left: 30px;
@@ -57,11 +59,11 @@ export const Footer = styled.View`
 export const Title = styled.Text`
   font-size: 20px;
   text-align: left;
-  color: red;
+  color: ${colors.red};
   font-weight: bold;
 `;
 
-export const NoButton = styled(TouchableOpacity)`
+export const NoButton = styled(Button)`
   height: 43px;
   background: #3b9eff;
   border-radius: 7px;

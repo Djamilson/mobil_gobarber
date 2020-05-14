@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Animated, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
@@ -14,9 +14,9 @@ import api from '~/_services/api';
 import AppointmentAdmin from '~/components/AppointmentAdmin';
 import Background from '~/components/Background/default';
 import Header from '~/components/Header';
-import Message from '~/components/Message';
-import Toast from '~/components/MessageToast';
-import enumAppointment from '~/enum/appointments';
+import Loading from '~/components/Loading';
+import statusAppointment from '~/enum/appointments';
+import Message from '~/pages/DashboardAdmin/Message';
 
 import {
   Container,
@@ -30,6 +30,10 @@ import {
 export default function DashboardAdmin({ navigation }) {
   const profile = useSelector((state) => state.user.profile);
   const { id } = profile;
+  const isFocused = useIsFocused();
+
+  const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
 
   const [appointments, setAppointments] = useState([]);
   const [appointmentsOld, setAppointmentsOld] = useState([]);
@@ -39,7 +43,7 @@ export default function DashboardAdmin({ navigation }) {
   const [dataFormat, setDataFormat] = useState();
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
-  const UrlSocketWeb = `https://${host.WEBHOST}`;
+  const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
 
   const dateFormatted = useMemo(
@@ -58,89 +62,29 @@ export default function DashboardAdmin({ navigation }) {
     });
   }
 
-  const isFocused = useIsFocused();
-  const animatedValue = new Animated.Value(0);
-
-  const [refreshing, setRefreshing] = useState(false);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
-  const [limit] = useState(3);
-
-  const [appointmentInfo, setAppointmentInfo] = useState({});
-
-  const [visible, setVisible] = useState(false);
-
-  function closeToast() {
-    setTimeout(() => {
-      setVisible(false);
-    }, 2000);
-  }
-
-  function callToast() {
-    setVisible(true);
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 350,
-      useNativeDriver: true,
-    }).start(closeToast());
-  }
-
-  async function loadPage(pageNumber = page, shouldRefresh = false) {
-    setCount(count + 1);
+  async function loadAppointments(pageNumber = page, shouldRefresh = false) {
     try {
       if (loading) return;
-
-      if (!shouldRefresh && page === appointmentInfo.pages) {
-        callToast();
-        return;
-      }
-
-      if (!shouldRefresh) {
-        setLoading(true);
-      }
+      setLoading(true);
 
       const res = await api.get(`appointments/provider`, {
         params: {
-          limit,
           page: `${pageNumber}`,
         },
       });
-
-      console.log('res.data', res.data);
-
       setLoading(false);
-      const { appointments: list, appointmentInfo: infon } = res.data;
-
-      setPage(pageNumber + 1);
-      setAppointmentInfo(infon);
-      setAppointments(shouldRefresh ? list : [...appointments, ...list]);
+      console.log('==>> EStou aqui no admin', res.data);
+      setAppointments(res.data);
     } catch (err) {
-      setLoading(false);
-    } finally {
       setLoading(false);
     }
   }
 
   async function refreshList() {
-    // setAppointments({});
     setRefreshing(true);
-    await loadPage(1, true);
+    await loadAppointments(1, true);
     setRefreshing(false);
   }
-
-  async function init() {
-    setAppointmentInfo({});
-    await loadPage(1, true);
-  }
-
-  // para força, pois estava dando error
-  useEffect(() => {
-    if (isFocused) {
-      setAppointments([]);
-      setVisible(false);
-      init();
-    }
-  }, [isFocused]);
 
   function removerAppoint(idAppointment) {
     setAppointments(
@@ -165,10 +109,10 @@ export default function DashboardAdmin({ navigation }) {
 
   const io = useMemo(
     () =>
-      socket(UrlSocketWeb, {
+      socket(UrlSocketLocal, {
         query: { id, value: 'dashboard_admin' },
       }),
-    [UrlSocketWeb, id],
+    [UrlSocketLocal, id],
   );
 
   useEffect(() => {
@@ -187,6 +131,12 @@ export default function DashboardAdmin({ navigation }) {
       subscribeToNewFiles();
     }
   }, [io, isFocused, removerAppoint]);
+
+  useEffect(() => {
+    if (isFocused) {
+      loadAppointments();
+    }
+  }, [isFocused]);
 
   function mudaStatus(appointment_id, status) {
     const novoStatus = appointments.map((appointment) =>
@@ -296,16 +246,12 @@ export default function DashboardAdmin({ navigation }) {
     );
   }
 
-  function closeMessage() {
-    setMessageCanceled(!messageCanceled);
-  }
-
   return (
     <Background>
       <Container>
         <Header navigation={navigation} />
         {!loading && appointments.length < 1 ? (
-          <Message nameIcon="exclamation-triangle">
+          <Message nameIcon="exclamation-triangle" refreshList={refreshList}>
             Ooops!! Você não tem agendamentos no momento!!
           </Message>
         ) : (
@@ -313,6 +259,11 @@ export default function DashboardAdmin({ navigation }) {
             <ProfileContainer>
               <Name>Todos agendamentos de {dateFormatted}</Name>
             </ProfileContainer>
+
+            {loading && refreshing !== true && (
+              <Loading loading={loading}>Carregando ...</Loading>
+            )}
+
             <ContentList>
               <List
                 data={appointments}
@@ -320,8 +271,7 @@ export default function DashboardAdmin({ navigation }) {
                 showsVerticalScrollIndicator={false}
                 onRefresh={refreshList}
                 refreshing={refreshing}
-                onEndReachedThreshold={0.1}
-                onEndReached={() => loadPage()}
+                onEndReached={() => loadAppointments()}
                 renderItem={({ item }) => (
                   <AppointmentAdmin
                     onAtender={() => onAtender(item.id, item.index)}
@@ -332,13 +282,6 @@ export default function DashboardAdmin({ navigation }) {
                     data={item}
                   />
                 )}
-              />
-
-              <Toast visible={loading} message="Buscando ..." />
-
-              <Toast
-                visible={visible}
-                message="Ops! Já não temos mais resgistros para buscar."
               />
             </ContentList>
           </Content>

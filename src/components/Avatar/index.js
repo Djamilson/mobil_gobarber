@@ -33,8 +33,8 @@ Header.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string.isRequired,
     avatar: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-    }).isRequired,
+      url: PropTypes.string,
+      path: PropTypes.string,
+    }),
   }).isRequired,
 };

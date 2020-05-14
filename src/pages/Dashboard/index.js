@@ -14,9 +14,8 @@ import api from '~/_services/api';
 import Appointment from '~/components/Appointment';
 import Background from '~/components/Background/default';
 import Header from '~/components/Header';
-import Message from '~/components/Message';
-import Toast from '~/components/MessageToast';
 import enumAppointment from '~/enum/appointments';
+import Message from '~/pages/Dashboard/Message';
 
 import {
   Container,
@@ -28,8 +27,8 @@ import {
 } from './styles';
 
 export default function Dashboard({ navigation }) {
+  const isFocused = useIsFocused();
   const profile = useSelector((state) => state.user.profile);
-  const { id } = profile;
   const [appointments, setAppointments] = useState([]);
   const [appointmentsOld, setAppointmentsOld] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -37,7 +36,10 @@ export default function Dashboard({ navigation }) {
   const [dataFormat, setDataFormat] = useState();
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
-  const UrlSocketWeb = `https://${host.WEBHOST}`;
+  const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
 
   function dateFormatted(time) {
@@ -46,137 +48,36 @@ export default function Dashboard({ navigation }) {
     });
   }
 
-  const io = useMemo(
-    () =>
-      socket(UrlSocketWeb, {
-        query: { id, value: 'dashboard' },
-      }),
-    [UrlSocketWeb, id],
-  );
-
-  const isFocused = useIsFocused();
-  const animatedValue = new Animated.Value(0);
-
-  const [refreshing, setRefreshing] = useState(false);
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
-  const [limit] = useState(3);
-
-  const [appointmentInfo, setAppointmentInfo] = useState({});
-
-  const [visible, setVisible] = useState(false);
-
-  function closeToast() {
-    setTimeout(() => {
-      setVisible(false);
-    }, 2000);
-  }
-
-  function callToast() {
-    setVisible(true);
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 350,
-      useNativeDriver: true,
-    }).start(closeToast());
-  }
-
-  async function loadPage(pageNumber = page, shouldRefresh = false) {
-    setCount(count + 1);
+  async function loadAppointments(pageNumber = page, shouldRefresh = false) {
     try {
       if (loading) return;
-
-      if (!shouldRefresh && page === appointmentInfo.pages) {
-        callToast();
-        return;
-      }
-
-      if (!shouldRefresh) {
-        setLoading(true);
-      }
+      setLoading(true);
 
       const res = await api.get(`appointments`, {
         params: {
-          limit,
           page: `${pageNumber}`,
         },
       });
-
-      console.log('res.data', res.data);
-
       setLoading(false);
-      const { appointments: list, appointmentInfo: infon } = res.data;
-
-      setPage(pageNumber + 1);
-      setAppointmentInfo(infon);
-      setAppointments(shouldRefresh ? list : [...appointments, ...list]);
+      console.log('==>> EStou aqui no admin', res.data);
+      setAppointments(res.data);
     } catch (err) {
       setLoading(false);
-    } finally {
-      setLoading(false);
     }
   }
-
-  async function refreshList() {
-    // setAppointments({});
-    setRefreshing(true);
-    await loadPage(1, true);
-    setRefreshing(false);
+  function closeMessage() {
+    setMessageCanceled(!messageCanceled);
   }
 
-  async function handleCancel(idAppointment) {
-    setAppointmentsOld(appointments);
-    setAppointments(
-      appointments
-        .filter((appointment) => appointment.id !== idAppointment)
-        .map((ap, index) => {
-          return { ...ap, index };
-        }),
-    );
-    await api
-      .delete(`appointments/${idAppointment}`)
-      .then(() => {
-        Alert.alert('Sucesso', 'Agendamento cancelado com sucesso!');
-      })
-      .catch(() => {
-        setAppointments(appointmentsOld);
+  const { id } = profile;
 
-        Alert.alert(
-          'Atenção',
-          'Não foi possível fazer o cancelamento, tente novamente!',
-        );
-      });
-  }
-
-  function handleChamaCancel(idAppointment) {
-    Alert.alert(
-      `Cancelar agendamento`,
-      'Tem certeza que deseja cancelar esse agendamento?',
-      [
-        {
-          text: 'Não',
-          onPress: () => {},
-          style: 'cancel',
-        },
-        { text: 'Sim', onPress: () => handleCancel(idAppointment) },
-      ],
-      { cancelable: false },
-    );
-  }
-
-  async function init() {
-    setAppointmentInfo({});
-    await loadPage(1, true);
-  }
-
-  // para força, pois estava dando error
-  useEffect(() => {
-    if (isFocused) {
-      setAppointments([]);
-      setVisible(false);
-      init();
-    }
-  }, [isFocused]);
+  const io = useMemo(
+    () =>
+      socket(UrlSocketLocal, {
+        query: { id, value: 'dashboard' },
+      }),
+    [UrlSocketLocal, id],
+  );
 
   useEffect(() => {
     function subscribeToNewFiles() {
@@ -240,12 +141,64 @@ export default function Dashboard({ navigation }) {
     messageCanceled,
   ]);
 
+  useEffect(() => {
+    if (isFocused) {
+      loadAppointments();
+    }
+  }, [isFocused]);
+
+  async function handleCancel(idAppointment) {
+    setAppointmentsOld(appointments);
+    setAppointments(
+      appointments
+        .filter((appointment) => appointment.id !== idAppointment)
+        .map((ap, index) => {
+          return { ...ap, index };
+        }),
+    );
+    await api
+      .delete(`appointments/${idAppointment}`)
+      .then(() => {
+        Alert.alert('Sucesso', 'Agendamento cancelado com sucesso!');
+      })
+      .catch(() => {
+        setAppointments(appointmentsOld);
+
+        Alert.alert(
+          'Atenção',
+          'Não foi possível fazer o cancelamento, tente novamente!',
+        );
+      });
+  }
+
+  function handleChamaCancel(idAppointment) {
+    Alert.alert(
+      `Cancelar agendamento`,
+      'Tem certeza que deseja cancelar esse agendamento?',
+      [
+        {
+          text: 'Não',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        { text: 'Sim', onPress: () => handleCancel(idAppointment) },
+      ],
+      { cancelable: false },
+    );
+  }
+
+  async function refreshList() {
+    setRefreshing(true);
+    await loadAppointments(1, true);
+    setRefreshing(false);
+  }
+
   return (
     <Background>
       <Container>
         <Header navigation={navigation} />
         {!loading && appointments.length < 1 ? (
-          <Message nameIcon="exclamation-triangle">
+          <Message nameIcon="exclamation-triangle" refreshList={refreshList}>
             Ooops!! Você não tem horário agendado no momento!!
           </Message>
         ) : (
@@ -260,21 +213,13 @@ export default function Dashboard({ navigation }) {
                 showsVerticalScrollIndicator={false}
                 onRefresh={refreshList}
                 refreshing={refreshing}
-                onEndReachedThreshold={0.1}
-                onEndReached={() => loadPage()}
+                onEndReached={() => loadAppointments()}
                 renderItem={({ item }) => (
                   <Appointment
                     onCancel={() => handleChamaCancel(item.id)}
                     data={item}
                   />
                 )}
-              />
-
-              <Toast visible={loading} message="Buscando ..." />
-
-              <Toast
-                visible={visible}
-                message="Ops! Já não temos mais resgistros para buscar."
               />
             </ContentList>
           </Content>

@@ -22,17 +22,27 @@ import { Container, List } from './styles';
 
 export default function FilaUser({ navigation, route }) {
   const { provider } = route.params;
+  const profile = useSelector((state) => state.user.profile);
+  const { id } = profile;
+  const [page, setPage] = useState(1);
 
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const profile = useSelector((state) => state.user.profile);
 
   const [messageCanceled, setMessageCanceled] = useState(false);
   const [dataFormat, setDataFormat] = useState();
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
-  const UrlSocketWeb = `https://${host.WEBHOST}`;
+  const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
+
+  const io = useMemo(
+    () =>
+      socket(UrlSocketLocal, {
+        query: { id, value: 'fila' },
+      }),
+    [UrlSocketLocal, id],
+  );
 
   function dateFormatted(time) {
     return formatRelative(parseISO(time), new Date(), {
@@ -48,16 +58,6 @@ export default function FilaUser({ navigation, route }) {
     setAppointmentSelect(item.provider.name);
     setDataFormat(dateFormatted(item.data));
   }
-
-  const { id } = profile;
-
-  const io = useMemo(
-    () =>
-      socket(UrlSocketWeb, {
-        query: { id, value: 'fila' },
-      }),
-    [UrlSocketWeb, id],
-  );
 
   useEffect(() => {
     function subscribeToNewFiles() {
@@ -104,20 +104,25 @@ export default function FilaUser({ navigation, route }) {
   ]);
 
   useEffect(() => {
-    async function loadAppointments(page = 1) {
-      setLoading(true);
-      await api
-        .get(`appointments/${provider.id}/fila?page=${page}`)
-        .then((res) => {
-          setLoading(false);
-          setAppointments(res.data);
-        })
-        .catch(() => {
-          setLoading(false);
+    async function loadAppointments(pageNumber = page) {
+      try {
+        if (loading) return;
+        setLoading(true);
+
+        const res = await api.get(`appointments/${provider.id}/fila`, {
+          params: {
+            page: `${pageNumber}`,
+          },
         });
+        setLoading(false);
+        console.log('==>> EStou aqui no admin', res.data);
+        setAppointments(res.data);
+      } catch (err) {
+        setLoading(false);
+      }
     }
     loadAppointments();
-  }, [provider.id]);
+  }, [provider]);
 
   function mudaStatus(appointment_id, status) {
     const novoStatus = appointments.map((appointment) =>

@@ -46,6 +46,7 @@ export default function Confirm({ navigation, route }) {
       })
       .catch((error) => {
         setLoading(false);
+        console.log('erroororo: ', error);
         Alert.alert(
           'Atenção',
           'Não foi possível finalizar o agendamento, tente novamente!',

@@ -24,7 +24,7 @@ export const ProfileInfo = styled.View`
 
 export const Name = styled.Text`
   font-weight: bold;
-  font-size: ${fonts.big}px;
+  font-size: ${fonts.large}px;
   color: ${colors.dark};
   margin-top: 5px;
 `;
