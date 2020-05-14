@@ -31,7 +31,6 @@ IconMa.loadFont();
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-
 function newDashboardAdmin() {
   return (
     <Stack.Navigator
