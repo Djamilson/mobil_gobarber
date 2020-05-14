@@ -161,9 +161,9 @@ export default function Dashboard({ navigation }) {
       .then(() => {
         Alert.alert('Sucesso', 'Agendamento cancelado com sucesso!');
       })
-      .catch(() => {
+      .catch((error) => {
         setAppointments(appointmentsOld);
-
+        console.log('==>>>>> : : :', error);
         Alert.alert(
           'Atenção',
           'Não foi possível fazer o cancelamento, tente novamente!',

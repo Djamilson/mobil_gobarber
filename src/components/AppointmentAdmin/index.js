@@ -87,7 +87,7 @@ export default function AppointmentAdmin({
       </Left>
       <ContainerButton>
         {data.status === enumAppointment.atendendo ? (
-          <FinalityButton onPress={onFinally}>
+          <FinalityButton loading={false} onPress={onFinally}>
             <TextButton>Finalizar</TextButton>
             <Icon
               name="done-all"
@@ -97,13 +97,13 @@ export default function AppointmentAdmin({
             />
           </FinalityButton>
         ) : (
-          <AtendendoButton onPress={onAtender}>
+          <AtendendoButton loading={false} onPress={onAtender}>
             <TextButton>Atender</TextButton>
             <Icon name="check" size={16} color="#fff" />
           </AtendendoButton>
         )}
         {data.status !== enumAppointment.cancelado && (
-          <CancelButton onPress={onCancel}>
+          <CancelButton loading={false} onPress={onCancel}>
             <TextButton>Cancelar</TextButton>
             <Icon
               name="close"

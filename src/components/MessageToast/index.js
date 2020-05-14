@@ -1,7 +1,7 @@
-import {ToastAndroid} from 'react-native';
+import { ToastAndroid } from 'react-native';
 
 const Toast = (props) => {
-  const {visible} = props;
+  const { visible } = props;
   if (visible) {
     ToastAndroid.showWithGravityAndOffset(
       props.message,

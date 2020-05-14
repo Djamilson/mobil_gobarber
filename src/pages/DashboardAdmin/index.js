@@ -62,7 +62,7 @@ export default function DashboardAdmin({ navigation }) {
     });
   }
 
-  async function loadAppointments(pageNumber = page, shouldRefresh = false) {
+  async function loadAppointments(pageNumber = page) {
     try {
       if (loading) return;
       setLoading(true);
@@ -82,7 +82,7 @@ export default function DashboardAdmin({ navigation }) {
 
   async function refreshList() {
     setRefreshing(true);
-    await loadAppointments(1, true);
+    await loadAppointments(1);
     setRefreshing(false);
   }
 
