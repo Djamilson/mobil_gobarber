@@ -56,7 +56,6 @@ export default function DashboardAdmin({ navigation }) {
   );
 
   function dateFormattedd(time) {
-    console.log(' Time::: ', time);
     return formatRelative(parseISO(time), new Date(), {
       locale: pt,
     });
@@ -92,9 +91,6 @@ export default function DashboardAdmin({ navigation }) {
           if (appointment.id !== idAppointment) {
             return { ...appointment };
           }
-          console.log('===>:::', appointment);
-          console.log('===>:::', appointment.date);
-
           setAppointmentSelect(appointment.user.name);
 
           setDataFormat(dateFormattedd(appointment.data));

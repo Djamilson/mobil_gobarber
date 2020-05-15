@@ -115,7 +115,6 @@ export default function FilaUser({ navigation, route }) {
           },
         });
         setLoading(false);
-        console.log('==>> EStou aqui no admin', res.data);
         setAppointments(res.data);
       } catch (err) {
         setLoading(false);

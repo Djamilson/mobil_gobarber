@@ -100,8 +100,6 @@ export default function Dashboard({ navigation }) {
           appointments !== undefined &&
           appointments.length > 0
         ) {
-          console.log('DataFormat:::', dataFormat);
-
           const listTes = appointments.filter((appointment) => {
             if (appointment.id !== dta.id) {
               return { ...appointment };
@@ -109,7 +107,7 @@ export default function Dashboard({ navigation }) {
             // appSelected = appointment;
             setAppointmentSelect(appointment.provider.name);
             setDataFormat(dateFormatted(appointment.date));
-            console.log('==>>: ', appointment);
+
             return '';
           });
 
@@ -159,7 +157,6 @@ export default function Dashboard({ navigation }) {
       })
       .catch((error) => {
         setAppointments(appointmentsOld);
-        console.log('==>>>>> : : :', error);
         Alert.alert(
           'Atenção',
           'Não foi possível fazer o cancelamento, tente novamente!',

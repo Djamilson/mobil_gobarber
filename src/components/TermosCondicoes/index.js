@@ -29,7 +29,6 @@ export default function TermosCondicoes({
   const dispatch = useDispatch();
 
   function handleAcceptRegulation() {
-    console.log('privacy:::', privacy);
     const newPrivacy = !privacy;
     dispatch(acceptionRegulation({ newPrivacy }));
     toggleModal();

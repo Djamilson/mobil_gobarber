@@ -27,7 +27,6 @@ export default function Busca({ handleSelectProvider }) {
             avatar: comp.logo,
           }));
           setCompany(data);
-          console.log('Dentro da busca:', data);
         })
         .catch(() => {
           setLoading(false);

@@ -15,7 +15,6 @@ export default function RegulationRaview() {
   );
 
   function handleAcceptRegulation() {
-    console.log('privacy:::', privacy);
     const newPrivacy = !privacy;
     dispatch(acceptionRegulation({ newPrivacy }));
   }

@@ -12,8 +12,6 @@ export default function MessageCancelAdmin({
   dataFormat,
   appointmentSelect,
 }) {
-  console.log('Cancel:');
-
   return (
     <Container>
       <Icon name={nameIcon} size={30} color="#ffe119" />

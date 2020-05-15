@@ -44,7 +44,6 @@ export default function SelectProvider({ navigation }) {
       .then((res) => {
         setLoading(false);
         setProviders(res.data);
-        console.log('Meus provaider: ', res.data);
       })
       .catch(() => {
         Alert.alert(

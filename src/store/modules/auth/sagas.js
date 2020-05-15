@@ -35,12 +35,10 @@ export function* signIn({ payload }) {
     const str = error.toString();
     const final = str.replace(/\D/g, '');
 
-    console.log('Error::', error);
-
     if (final === '400') {
       Alert.alert(
         'Falha na autenticação',
-   
+
         'Não foi possível encontra um usuário, crie sua conta!',
       );
       yield put(signFailure());
@@ -211,17 +209,12 @@ export function* createImage({ payload }) {
   try {
     const { data } = payload.data;
 
-    console.log('image data:::', data);
-
     const resp = yield call(api.post, 'files/mobile', data);
-
-    console.log('resp:::', resp.data);
 
     yield put(updateProfileSuccess(resp.data.user));
 
     Alert.alert('Sucesso', 'Imagem inserida com sucesso!');
   } catch (error) {
-    console.log('error::', error);
     Alert.alert('Error', 'Não foi possível inserir a imagem, tente novamente!');
 
     yield put(signInFaileru());
@@ -232,13 +225,10 @@ export function* updateImage({ payload }) {
   try {
     const { data } = payload.data;
 
-    console.log('resp:::', data);
-
     yield put(updateProfileSuccess(data.user));
 
     Alert.alert('Sucesso', 'Imagem atualizada com sucesso!');
   } catch (error) {
-    console.log('error::', error);
     Alert.alert('Error', 'Não foi possível alterar a imagem, tente novamente!');
 
     yield put(signInFaileru());
