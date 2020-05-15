@@ -1,4 +1,4 @@
-package com.fastfeet.mobile;
+package com.gobarbervip.mobile;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

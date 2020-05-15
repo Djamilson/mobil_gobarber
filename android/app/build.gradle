@@ -141,7 +141,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.fastfeet.mobile"
+        applicationId "com.gobarbervip.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
