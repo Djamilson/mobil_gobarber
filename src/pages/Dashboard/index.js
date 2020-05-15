@@ -37,7 +37,7 @@ export default function Dashboard({ navigation }) {
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
   const [refreshing, setRefreshing] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
 
   const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
@@ -48,7 +48,7 @@ export default function Dashboard({ navigation }) {
     });
   }
 
-  async function loadAppointments(pageNumber = page, shouldRefresh = false) {
+  async function loadAppointments(pageNumber = page) {
     try {
       if (loading) return;
       setLoading(true);
@@ -59,24 +59,20 @@ export default function Dashboard({ navigation }) {
         },
       });
       setLoading(false);
-      console.log('==>> EStou aqui no admin', res.data);
       setAppointments(res.data);
     } catch (err) {
       setLoading(false);
     }
-  }
-  function closeMessage() {
-    setMessageCanceled(!messageCanceled);
   }
 
   const { id } = profile;
 
   const io = useMemo(
     () =>
-      socket(UrlSocketLocal, {
+      socket(UrlSocketWeb, {
         query: { id, value: 'dashboard' },
       }),
-    [UrlSocketLocal, id],
+    [UrlSocketWeb, id],
   );
 
   useEffect(() => {

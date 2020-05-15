@@ -73,7 +73,6 @@ export default function DashboardAdmin({ navigation }) {
         },
       });
       setLoading(false);
-      console.log('==>> EStou aqui no admin', res.data);
       setAppointments(res.data);
     } catch (err) {
       setLoading(false);
@@ -109,10 +108,10 @@ export default function DashboardAdmin({ navigation }) {
 
   const io = useMemo(
     () =>
-      socket(UrlSocketLocal, {
+      socket(UrlSocketWeb, {
         query: { id, value: 'dashboard_admin' },
       }),
-    [UrlSocketLocal, id],
+    [UrlSocketWeb, id],
   );
 
   useEffect(() => {

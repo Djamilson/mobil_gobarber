@@ -199,7 +199,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
             options={{
               tabBarLabel: 'Meus agendamentos',
               tabBarIcon: ({ color }) => (
-                <Icon name="menu" size={20} color={color} />
+                <Icon name="menu" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -210,7 +210,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
             options={{
               tabBarLabel: 'Meu Perfil',
               tabBarIcon: ({ color }) => (
-                <Icon name="person" size={20} color={color} />
+                <Icon name="person" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -229,7 +229,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
             options={{
               tabBarLabel: 'Agendamentos',
               tabBarIcon: ({ color }) => (
-                <Icon name="event" size={20} color={color} />
+                <Icon name="event" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -240,7 +240,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
               tabBarVisible: false,
               tabBarLabel: 'Agendar',
               tabBarIcon: ({ color }) => (
-                <Icon name="add-circle-outline" size={20} color={color} />
+                <Icon name="add-circle-outline" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -251,7 +251,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
               tabBarVisible: false,
               tabBarLabel: 'In Loco',
               tabBarIcon: ({ color }) => (
-                <IconMa name="hail" size={20} color={color} />
+                <IconMa name="hail" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -261,7 +261,7 @@ function getInitialRoute(isSigned, acceped_regulation) {
             options={{
               tabBarLabel: 'Meu Perfil',
               tabBarIcon: ({ color }) => (
-                <Icon name="person" size={20} color={color} />
+                <Icon name="person" size={20} color={`${color}`} />
               ),
             }}
           />
@@ -271,7 +271,6 @@ function getInitialRoute(isSigned, acceped_regulation) {
     return (
       <Stack.Navigator headerMode="none">
         <Stack.Screen name="RegulationReview" component={RegulationReview} />
-        <Stack.Screen name="Logout" component={Logout} />
       </Stack.Navigator>
     );
   }

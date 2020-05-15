@@ -38,10 +38,10 @@ export default function FilaUser({ navigation, route }) {
 
   const io = useMemo(
     () =>
-      socket(UrlSocketLocal, {
+      socket(UrlSocketWeb, {
         query: { id, value: 'fila' },
       }),
-    [UrlSocketLocal, id],
+    [UrlSocketWeb, id],
   );
 
   function dateFormatted(time) {
@@ -138,18 +138,19 @@ export default function FilaUser({ navigation, route }) {
   }
 
   async function handleCancel(idAppointmente, oldStatus) {
-    // setLoading(true);
-    Alert.alert('Sucesso', 'Agendamento cancelado com sucesso!');
+    try {
+      await api.delete(`appointments/${idAppointmente}`);
 
-    mudaStatus(idAppointmente, enumAppointment.cancelado);
-
-    await api.delete(`appointments/${idAppointmente}`).catch(() => {
+      mudaStatus(idAppointmente, enumAppointment.cancelado);
+      Alert.alert('Sucesso', 'Agendamento cancelado com sucesso!');
+    } catch (err) {
+      // setLoading(false);
       mudaStatus(idAppointmente, oldStatus);
       Alert.alert(
         'Atenção',
         'Não foi possível fazer o cancelamento no momento, tente novamente!',
       );
-    });
+    }
   }
 
   function handleChamaCancel(idAppointmente, item) {
