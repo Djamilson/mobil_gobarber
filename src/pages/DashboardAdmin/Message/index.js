@@ -14,7 +14,7 @@ export default function Message({ children, nameIcon, refreshList }) {
       <Info>
         <Name>{children}</Name>
         <ButtonRefresh loading={false} onPress={() => refreshList()}>
-          <Icon name="sync-alt" size={fonts.bigbig} color={colors.white} />
+          <Icon name="sync-alt" size={fonts.bigbig} color="#fff" />
         </ButtonRefresh>
       </Info>
     </Container>

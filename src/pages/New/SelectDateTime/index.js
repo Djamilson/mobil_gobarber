@@ -42,10 +42,8 @@ export default function SelectDateTime({ navigation, route }) {
         .then((res) => {
           setLoading(false);
           setHours(res.data);
-          console.log('=>>>>', res.data);
         })
         .catch((error) => {
-          console.log('=>>>> error', error);
           setLoading(false);
         });
     }
@@ -66,12 +64,6 @@ export default function SelectDateTime({ navigation, route }) {
     const timeZoneLocal = offsett / 60;
     // add 3 horas, que é a diferença do fuzo horário
     const startOfDayy = addHours(parsedDate, timeZoneLocal);
-
-    console.log('inTime:', inTime);
-    console.log('data_:', data_);
-    console.log('data2:', data2);
-    console.log('time:', time);
-    console.log('startOfDayy:', startOfDayy);
 
     navigation.navigate('Confirm', {
       provider,

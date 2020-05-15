@@ -31,7 +31,7 @@ export default function Profile() {
   const [loadingImage, setLoadingImage] = useState(false);
 
   const profile_ = useSelector((state) => state.user);
-  
+
   const profile = useSelector((state) => state.user.profile);
 
   const emailRef = useRef();
@@ -114,41 +114,25 @@ export default function Profile() {
 
       try {
         setLoadingImage(true);
-        console.log('TRY::', typeof undefined);
 
         if (profile.avatar === null) {
-          console.log('cheguei no dispatch no if::', typeof undefined);
-
           dispatch(createImage({ data }));
           setLoadingImage(false);
           return;
         }
 
         const avatar_id = profile.avatar === null ? '' : profile.avatar.id;
-        data.append('peppepp pppe id', avatar_id);
+        data.append('id', avatar_id);
 
         const res = await api.put(`files/${avatar_id}`, data);
-        console.log('res::::', res.data);
         dispatch(updateImage({ data: res.data }));
         setLoadingImage(false);
-        /* Alert.alert(
-          'Sucesso!',
-          'Imagem atualizada com sucesso, será alterada no próximo login!',
-        ); */
       } catch (error) {
-        const str = error.toString();
-        const final = str.replace(/\D/g, '');
         setLoadingImage(false);
         Alert.alert(
           'Atenção!',
           'Não foi possivel atualizar a imagem, tente novamente.',
         );
-        /* if (final === '400') {
-          Alert.alert(
-            'Atenção!',
-            'Não foi possivel atualizar a imagem, tente novamente.',
-          );
-        } */
       }
     });
   }

@@ -40,13 +40,11 @@ export default function CodeReset({ navigation, route }) {
             email,
           },
         });
-        console.log('===>>>>>', res.data);
+
         setToken(res.data);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-
-        console.log('===>>>>> errrooe', error);
 
         const str = error.toString();
         const final = str.replace(/\D/g, '');

@@ -12,7 +12,7 @@ export default function MessageCancel({
   dataFormat,
   appointmentSelect,
 }) {
-  console.log('appointmentSelect:', appointmentSelect);
+  
   return (
     <Container>
       <Icon name={nameIcon} size={30} color="#ffe119" />

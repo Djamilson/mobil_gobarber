@@ -1,6 +1,6 @@
-import styled from 'styled-components/native';
+import { RectButton } from 'react-native-gesture-handler';
 
-import Button from '~/components/Button';
+import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -30,7 +30,7 @@ export const ProvidersList = styled.FlatList.attrs({
   padding: 0 20px;
 `;
 
-export const Provider = styled(Button)`
+export const Provider = styled(RectButton)`
   flex: 1;
   background: #fff;
   border-radius: 4px;

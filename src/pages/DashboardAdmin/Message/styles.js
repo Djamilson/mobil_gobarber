@@ -31,7 +31,7 @@ export const Name = styled.Text`
   font-weight: bold;
   font-size: 14px;
   color: ${colors.white};
-  padding-right: 20px;
+  width: ${widthPercentageToDP('63%')}px;
 `;
 
 export const ButtonRefresh = styled(Button)`

@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 export default {
   padding_price: 7,
@@ -13,8 +13,8 @@ export default {
   margin_top_2: -130,
   height_button: 50,
   ...Platform.select({
-    ios: {headerHeight: 64, headerPadding: 20},
-    android: {headerHeight: 44, headerPadding: 0},
+    ios: { headerHeight: 64, headerPadding: 20 },
+    android: { headerHeight: 44, headerPadding: 0 },
   }),
   tabBarHeight: 50,
 };

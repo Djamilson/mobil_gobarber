@@ -4,13 +4,11 @@ import localhostConfig from '~/_config/host';
 
 const { WEBHOST, PORT } = localhostConfig;
 
-let baseURL = `https://${WEBHOST}`;
+let baseURL = `https://${WEBHOST}/gobarber`;
 
 if (__DEV__) {
   baseURL = `http://${WEBHOST}:${PORT}`;
 }
-
-console.log('baseURL:', baseURL);
 
 const api = axios.create({
   baseURL,

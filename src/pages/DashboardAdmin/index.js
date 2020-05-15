@@ -56,7 +56,6 @@ export default function DashboardAdmin({ navigation }) {
   );
 
   function dateFormattedd(time) {
-    console.log(' Time::: ', time);
     return formatRelative(parseISO(time), new Date(), {
       locale: pt,
     });
@@ -73,7 +72,6 @@ export default function DashboardAdmin({ navigation }) {
         },
       });
       setLoading(false);
-      console.log('==>> EStou aqui no admin', res.data);
       setAppointments(res.data);
     } catch (err) {
       setLoading(false);
@@ -93,9 +91,6 @@ export default function DashboardAdmin({ navigation }) {
           if (appointment.id !== idAppointment) {
             return { ...appointment };
           }
-          console.log('===>:::', appointment);
-          console.log('===>:::', appointment.date);
-
           setAppointmentSelect(appointment.user.name);
 
           setDataFormat(dateFormattedd(appointment.data));
@@ -109,10 +104,10 @@ export default function DashboardAdmin({ navigation }) {
 
   const io = useMemo(
     () =>
-      socket(UrlSocketLocal, {
+      socket(UrlSocketWeb, {
         query: { id, value: 'dashboard_admin' },
       }),
-    [UrlSocketLocal, id],
+    [UrlSocketWeb, id],
   );
 
   useEffect(() => {
