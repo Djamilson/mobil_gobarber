@@ -4,7 +4,7 @@ import localhostConfig from '~/_config/host';
 
 const { WEBHOST, PORT } = localhostConfig;
 
-let baseURL = `https://${WEBHOST}/gobarber`;
+let baseURL = `https://${WEBHOST}`;
 
 if (__DEV__) {
   baseURL = `http://${WEBHOST}:${PORT}`;
