@@ -109,12 +109,11 @@ export default function Profile() {
 
       const data = new FormData();
       data.append('file', file);
-      console.log('Esta no 1 IF');
+
       try {
         setLoadingImage(true);
 
         if (profile.avatar === null) {
-          console.log('Esta no 1 IF');
           dispatch(createImage({ data }));
           setLoadingImage(false);
           return;

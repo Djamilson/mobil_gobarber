@@ -25,6 +25,7 @@ export default {
   gargoylegas: '#FCDE4B',
   blue: '#00f',
   green: '#008000',
+  blue_ciano: '#3b9eff',
 
   transparent: 'rgba(0, 0, 0, 0)',
 };
