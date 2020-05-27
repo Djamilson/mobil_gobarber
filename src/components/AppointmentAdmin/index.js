@@ -47,7 +47,7 @@ export default function AppointmentAdmin({
         <Avatar
           source={{
             uri: data.user.avatar
-              ? data.user.avatar.url
+              ? `${data.user.avatar.url}-xs`
               : `https://api.adorable.io/avatar/50/${data.user.name}.png`,
           }}
         />

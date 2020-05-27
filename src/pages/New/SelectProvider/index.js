@@ -183,7 +183,7 @@ export default function SelectProvider({ navigation }) {
                 <Avatar
                   source={{
                     uri: provider?.avatar
-                      ? provider?.avatar.url
+                      ? `${provider.avatar.url}-xs`
                       : `https://api.adorable.io/avatar/50/imagem.png`,
                   }}
                 />

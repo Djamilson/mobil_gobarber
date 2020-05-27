@@ -61,7 +61,7 @@ export default function Confirm({ navigation, route }) {
           <Avatar
             source={{
               uri: avatar
-                ? avatar.url
+                ? `${avatar.url}-xs`
                 : `https://api.adorable.io/avatar/50/${name}.png`,
             }}
           />
