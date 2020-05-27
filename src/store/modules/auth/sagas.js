@@ -98,7 +98,6 @@ export function* signIn({ payload }) {
     if (str === 'Error: Network Error') {
       Alert.alert(
         'Falha na autenticação',
-
         'Não foi possível conectar ao servidor, tente novamente!',
       );
 
@@ -151,7 +150,7 @@ export function* signUp({ payload }) {
     }
 
     if (final === '401') {
-      Alert.alert('Error', 'Usuário já cadastrado!');
+      Alert.alert('Falha ao tentar fazer o cadastro', 'Usuário já cadastrado!');
 
       yield put(signInFaileru());
       return;
@@ -197,7 +196,7 @@ export function* acceptRegulationUp({ payload }) {
     Alert.alert('Sucesso', 'Os termos não foram aceitos!');
   } catch (error) {
     Alert.alert(
-      'Error',
+      'Falha ao aceitar os termos',
       'Não foi possível aceitar os termos, tente novamente!',
     );
 
@@ -208,7 +207,6 @@ export function* acceptRegulationUp({ payload }) {
 export function* createImage({ payload }) {
   try {
     const { data } = payload.data;
-    console.log('files/mobile::::::');
 
     const resp = yield call(api.post, 'files/mobile', data);
 
@@ -216,9 +214,8 @@ export function* createImage({ payload }) {
 
     Alert.alert('Sucesso', 'Imagem inserida com sucesso!');
   } catch (error) {
-    console.log('oorororo::: ', error);
     Alert.alert(
-      'Falha ao inserir a imagem',
+      'Falha ao tentar inserir a imagem',
       'Houve um erro ao tentar inserir a imagem,  tente novamente',
     );
 
@@ -234,7 +231,10 @@ export function* updateImage({ payload }) {
 
     Alert.alert('Sucesso', 'Imagem atualizada com sucesso!');
   } catch (error) {
-    Alert.alert('Error', 'Não foi possível alterar a imagem, tente novamente!');
+    Alert.alert(
+      'Falha ao tentar atualizar a imagem',
+      'Não foi possível alterar a imagem, tente novamente!',
+    );
 
     yield put(signInFaileru());
   }
