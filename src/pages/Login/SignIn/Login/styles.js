@@ -32,7 +32,7 @@ export const FormInput = styled(Input)``;
 
 export const SubmitButton = styled(Button)`
   margin-top: 10px;
-  background: ${colors.green};
+  background: ${colors.second};
   height: 45px;
 `;
 

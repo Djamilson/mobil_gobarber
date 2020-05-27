@@ -208,6 +208,7 @@ export function* acceptRegulationUp({ payload }) {
 export function* createImage({ payload }) {
   try {
     const { data } = payload.data;
+    console.log('files/mobile::::::');
 
     const resp = yield call(api.post, 'files/mobile', data);
 
@@ -215,7 +216,11 @@ export function* createImage({ payload }) {
 
     Alert.alert('Sucesso', 'Imagem inserida com sucesso!');
   } catch (error) {
-    Alert.alert('Error', 'Não foi possível inserir a imagem, tente novamente!');
+    console.log('oorororo::: ', error);
+    Alert.alert(
+      'Falha ao inserir a imagem',
+      'Houve um erro ao tentar inserir a imagem,  tente novamente',
+    );
 
     yield put(signInFaileru());
   }

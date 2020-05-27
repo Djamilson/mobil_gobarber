@@ -7,11 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import api from '~/_services/api';
 import AvatarPreview from '~/components/Avatar';
 import Background from '~/components/Background';
-import Loading from '~/components/Loading_';
 import { createImage, updateImage } from '~/store/modules/auth/actions';
 import { updateProfileRequest } from '~/store/modules/user/actions';
 import { fonts, colors } from '~/styles';
 
+import Loading from './Loading';
 import {
   Container,
   ContainerAvatar,
@@ -29,8 +29,6 @@ export default function Profile() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.user.loading);
   const [loadingImage, setLoadingImage] = useState(false);
-
-  const profile_ = useSelector((state) => state.user);
 
   const profile = useSelector((state) => state.user.profile);
 
@@ -111,11 +109,12 @@ export default function Profile() {
 
       const data = new FormData();
       data.append('file', file);
-
+      console.log('Esta no 1 IF');
       try {
         setLoadingImage(true);
 
         if (profile.avatar === null) {
+          console.log('Esta no 1 IF');
           dispatch(createImage({ data }));
           setLoadingImage(false);
           return;
@@ -131,7 +130,7 @@ export default function Profile() {
         setLoadingImage(false);
         Alert.alert(
           'Atenção!',
-          'Não foi possivel atualizar a imagem, tente novamente.',
+          `${error} Não foi possivel atualizar a imagem, tente novamente.`,
         );
       }
     });
@@ -142,7 +141,11 @@ export default function Profile() {
       <Container>
         <ContainerAvatar>
           {loadingImage === true && (
-            <Loading loading={loadingImage}>Salvando ...</Loading>
+            <Loading loading={loadingImage}>
+              Aguarde um momento, estamos redimensionando a imagem para vários
+              tamanhos para melhorar a sua navegação em diferentes
+              dispositivos...
+            </Loading>
           )}
           {loadingImage !== true && !image.preview && (
             <AvatarPreview data={profile} number={2.5} />
