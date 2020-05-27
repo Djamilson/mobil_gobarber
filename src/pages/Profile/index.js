@@ -111,14 +111,13 @@ export default function Profile() {
       data.append('file', file);
 
       try {
-        setLoadingImage(true);
-
         if (profile.avatar === null) {
+          setLoadingImage(true);
           dispatch(createImage({ data }));
-          setLoadingImage(false);
+          setLoadingImage(loading);
           return;
         }
-
+        setLoadingImage(true);
         const avatar_id = profile.avatar === null ? '' : profile.avatar.id;
         data.append('id', avatar_id);
 
@@ -143,7 +142,8 @@ export default function Profile() {
             <Loading loading={loadingImage}>
               Aguarde um momento, estamos redimensionando a imagem para vários
               tamanhos para melhorar a sua navegação em diferentes
-              dispositivos...
+              dispositivos... OBS: Para corrigir erro de posicionamento da
+              imagem coloque o fone na horizontal ou vertical.
             </Loading>
           )}
           {loadingImage !== true && !image.preview && (
