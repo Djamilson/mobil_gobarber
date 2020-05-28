@@ -88,7 +88,7 @@ export default function CodeReset({ navigation, route }) {
   }
 
   const deleteEmailStorage = async () => {
-    await AsyncStorage.removeItem('@fastfeetforgetpassword');
+    await AsyncStorage.removeItem('@gobarberforgetpassword');
   };
 
   async function newCodeActive() {

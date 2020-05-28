@@ -38,7 +38,7 @@ export default function NewPassword({ navigation, route }) {
   }, []);
 
   const deleteEmailStorage = async () => {
-    await AsyncStorage.removeItem('@fastfeetforgetpassword');
+    await AsyncStorage.removeItem('@gobarberforgetpassword');
   };
 
   async function handleSubmit() {
@@ -55,7 +55,7 @@ export default function NewPassword({ navigation, route }) {
         setLoading(false);
         Alert.alert(
           'Sucesso',
-          `Senha redefinida com sucesso, acesse sua conta no Fastfeet!`,
+          `Senha redefinida com sucesso, acesse sua conta no GobarberVip!`,
         );
 
         deleteEmailStorage();
