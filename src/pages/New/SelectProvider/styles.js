@@ -13,7 +13,6 @@ export const ProvidersList = styled.FlatList.attrs({
   numColumns: 2,
 })`
   margin-top: ${(props) => (props.test ? '5px' : '30px')};
-
   padding: 0 20px;
 `;
 

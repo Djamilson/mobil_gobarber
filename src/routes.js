@@ -188,8 +188,8 @@ function getInitialRoute(isSigned, acceped_regulation) {
       return acceped_regulation.user.profile.provider === true ? (
         <Tabs.Navigator
           tabBarOptions={{
-            activeTintColor: `${colors.third}`,
-            inactiveTintColor: `${colors.sixX}`,
+            activeColor: `${colors.third}`,
+            inactiveColor: `${colors.sixX}`,
             style: { backgroundColor: `${colors.white_}` },
             keyboardHidesTabBar: true,
           }}>
@@ -218,8 +218,8 @@ function getInitialRoute(isSigned, acceped_regulation) {
       ) : (
         <Tabs.Navigator
           tabBarOptions={{
-            activeTintColor: `${colors.third}`,
-            inactiveTintColor: `${colors.sixX}`,
+            activeColor: `${colors.third}`,
+            inactiveColor: `${colors.sixX}`,
             style: { backgroundColor: `${colors.white_}` },
             keyboardHidesTabBar: true,
           }}>

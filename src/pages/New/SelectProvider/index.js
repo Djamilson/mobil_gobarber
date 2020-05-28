@@ -100,16 +100,17 @@ export default function SelectProvider({ navigation }) {
   async function handleSelectProvider(value) {
     if (value !== null) {
       setLoading(true);
-      await api
-        .get(`users/${value.id}`)
-        .then((res) => {
-          setLoading(false);
-          setProviders(res.data);
-          setNovaCompany(value);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
+
+      try {
+        const res = await api.get(`users/${value.id}`);
+        setLoading(false);
+
+        setProviders(res.data);
+
+        setNovaCompany(value);
+      } catch (error) {
+        setLoading(false);
+      }
     } else {
       loadProvider();
     }
