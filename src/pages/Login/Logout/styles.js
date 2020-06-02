@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 import Button from '~/components/Button';
-import {colors, fonts} from '~/styles';
+import { colors, fonts } from '~/styles';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -31,7 +31,7 @@ export const Label = styled.Text`
 
 export const InfoText = styled.Text`
   margin-top: 4px;
-  font-size: ${fonts.bigbig}px;
+  font-size: ${fonts.large}px;
   color: ${colors.dark};
   margin-bottom: 10px;
 `;

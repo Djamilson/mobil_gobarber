@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { formatRelative, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import Avatar from '~/components/Avatar';
 import Background from '~/components/Background/default';
@@ -16,6 +19,15 @@ import {
 
 export default function Logout() {
   const user = useSelector((state) => state.user.profile);
+
+  const dateFormatted = useMemo(
+    () =>
+      formatRelative(parseISO(user.created_at), new Date(), {
+        locale: pt,
+      }),
+
+    [user.created_at],
+  );
 
   const dispatch = useDispatch();
 
@@ -35,7 +47,7 @@ export default function Logout() {
           <Label>Email</Label>
           <InfoText>{user.email}</InfoText>
           <Label>Data de cadastro</Label>
-          <InfoText>{user.created_at}</InfoText>
+          <InfoText>{dateFormatted}</InfoText>
         </Content>
         <SubmitButton loading={false} onPress={() => handleLogout()}>
           Logout
