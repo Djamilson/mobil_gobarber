@@ -29,18 +29,6 @@ export const Item = styled.View`
   max-height: 95%;
 `;
 
-export const ApproveButton = styled.TouchableOpacity`
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  right: 30px;
-  background: #7159c1;
-  border-radius: 5px;
-  height: 54px;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const ApproveButtonText = styled.Text`
   font-size: 16px;
   color: #fff;
@@ -61,6 +49,19 @@ export const Title = styled.Text`
   text-align: left;
   color: ${colors.red};
   font-weight: bold;
+`;
+
+// nao pode muda par (Button) pois da erro
+export const ApproveButton = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+  background: #7159c1;
+  border-radius: 5px;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
 `;
 
 // nao pode muda par (Button) pois da erro
