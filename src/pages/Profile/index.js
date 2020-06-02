@@ -141,9 +141,9 @@ export default function Profile() {
           {loadingImage === true && (
             <Loading loading={loadingImage}>
               Aguarde um momento, estamos redimensionando a imagem para vários
-              tamanhos para melhorar a sua navegação em diferentes
-              dispositivos... OBS: Para corrigir erro de posicionamento da
-              imagem coloque o fone na horizontal ou vertical.
+              tamanhos para melhorar a usabilidade em diferentes dispositivos...
+              OBS: Para corrigir erro de posicionamento da imagem coloque o fone
+              na horizontal ou vertical.
             </Loading>
           )}
           {loadingImage !== true && !image.preview && (
