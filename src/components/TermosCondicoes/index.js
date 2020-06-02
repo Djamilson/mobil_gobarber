@@ -51,7 +51,7 @@ export default function TermosCondicoes({
           </Background>
 
           <Footer>
-            <NoButton loading onPress={toggleModal}>
+            <NoButton loading={false} onPress={toggleModal}>
               <Text>Fechar</Text>
             </NoButton>
           </Footer>

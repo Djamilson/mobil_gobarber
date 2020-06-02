@@ -1,19 +1,20 @@
+import { StyleSheet } from 'react-native';
+
 import styled from 'styled-components/native';
 
-import { heightPercentageToDP, widthPercentageToDP } from '~/utils/Layout';
+import { widthPercentageToDP } from '~/utils/Layout';
 
 export const Container = styled.View`
   flex: 1;
 `;
-export const Content = styled.View`
-  height: 60px;
-  border-radius: 4px;
-  flex-direction: row;
+
+export const BordSelect = styled.View`
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
   justify-content: center;
   align-items: center;
-  padding: 5px ${heightPercentageToDP('8%')}px 2px 0;
-
-  width: ${widthPercentageToDP('92%')}px;
-  margin-left: ${widthPercentageToDP('4%')}px;
-  margin-right: ${widthPercentageToDP('4%')}px;
+  top: 20px;
+  margin: 0 ${widthPercentageToDP('4%')}px;
+  height: 50px;
 `;
