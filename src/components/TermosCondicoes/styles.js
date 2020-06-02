@@ -28,13 +28,13 @@ export const Item = styled.View`
   padding: 3px;
   max-height: 95%;
 `;
-export const ApproveButton = styled(Button)`
+
+export const ApproveButton = styled.TouchableOpacity`
   position: absolute;
   bottom: 30px;
   left: 30px;
   right: 30px;
-
-  background-color: #27ddc5;
+  background: #7159c1;
   border-radius: 5px;
   height: 54px;
   align-items: center;
@@ -63,7 +63,8 @@ export const Title = styled.Text`
   font-weight: bold;
 `;
 
-export const NoButton = styled(Button)`
+// nao pode muda par (Button) pois da erro
+export const NoButton = styled.TouchableOpacity`
   height: 43px;
   background: #3b9eff;
   border-radius: 7px;
