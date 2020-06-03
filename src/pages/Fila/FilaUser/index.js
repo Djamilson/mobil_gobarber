@@ -33,7 +33,7 @@ export default function FilaUser({ navigation, route }) {
   const [dataFormat, setDataFormat] = useState();
   const [appointmentSelect, setAppointmentSelect] = useState('');
 
-  const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
+  const UrlSocketWeb = `https://${host.WEBHOST}`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
 
   const io = useMemo(
