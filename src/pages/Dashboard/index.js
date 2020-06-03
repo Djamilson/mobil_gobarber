@@ -39,7 +39,7 @@ export default function Dashboard({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [page] = useState(1);
 
-  const UrlSocketWeb = `https://${host.WEBHOST}/gobarber`;
+  const UrlSocketWeb = `https://${host.WEBHOST}`;
   const UrlSocketLocal = `http://${host.WEBHOST}:${host.PORT}`;
 
   function dateFormatted(time) {
